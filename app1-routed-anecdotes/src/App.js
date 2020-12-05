@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import About from "./components/About.js";
 import AnecdoteList from "./components/AnecdoteList.js";
+import Anecdote from "./components/Anecdote.js";
 import Footer from "./components/Footer.js";
 import Menu from "./components/Menu.js";
 import CreateNew from "./components/CreateNew.js";
@@ -8,7 +9,6 @@ import {
   BrowserRouter as Router,
   Route, Switch
 } from "react-router-dom";
-
 
 
 const INITIAL_ANECDOTES_LIST = [
@@ -32,7 +32,6 @@ const INITIAL_ANECDOTES_LIST = [
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState(INITIAL_ANECDOTES_LIST)
-
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
@@ -59,15 +58,18 @@ const App = () => {
       <h1>Software anecdotes</h1>
       <Menu />
       <Switch>
-      <Route path="/create">
-        <CreateNew addNew={addNew} />
-      </Route>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/">
+        <Route path="/anecdote/:id">
         <AnecdoteList anecdotes={anecdotes} />
-      </Route>
+        </Route>
+        <Route path="/create">
+          <CreateNew addNew={addNew} />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/">
+          <AnecdoteList anecdotes={anecdotes} />
+        </Route>
       </Switch>
       <Footer />
     </Router>
