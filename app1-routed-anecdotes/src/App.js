@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import About from "./components/About.js";
 import AnecdoteList from "./components/AnecdoteList.js";
-import Anecdote from "./components/Anecdote.js";
 import Footer from "./components/Footer.js";
 import Menu from "./components/Menu.js";
 import CreateNew from "./components/CreateNew.js";
+import {
+  ToastProvider
+} from "react-toast-notifications";
 import {
   BrowserRouter as Router,
   Route, Switch
@@ -56,6 +58,7 @@ const App = () => {
   return (
     <Router>
       <h1>Software anecdotes</h1>
+      <ToastProvider autoDismissTimeout={10000} placement="top-center">
       <Menu />
       <Switch>
         <Route path="/anecdote/:id">
@@ -71,6 +74,7 @@ const App = () => {
           <AnecdoteList anecdotes={anecdotes} />
         </Route>
       </Switch>
+      </ToastProvider>
       <Footer />
     </Router>
   )

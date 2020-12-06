@@ -2,6 +2,9 @@ import React,{
     useState
 } from "react";
 import {
+  useToasts
+} from "react-toast-notifications";
+import {
   useHistory
 } from "react-router-dom";
 
@@ -12,6 +15,7 @@ const CreateNew = (props) => {
     const [info, setInfo] = useState('')
 
     const history = useHistory();
+    const {addToast} = useToasts();
 
     const resetAllStates = () => {
       setContent("");
@@ -21,15 +25,24 @@ const CreateNew = (props) => {
   
     const handleSubmit = (e) => {
       e.preventDefault()
+
       props.addNew({
         content,
         author,
         info,
         votes: 0
       })
-      resetAllStates();
+
+      
+
+      addToast(`Anecdote "${content}" added`,{
+        autoDismiss: true,
+        appearance: "success"
+      })
 
       history.push("/");
+
+      // resetAllStates();
 
     }
   
