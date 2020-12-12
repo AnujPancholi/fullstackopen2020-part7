@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const restCountiresAxios = axios.create({
+  baseURL: "https://restcountries.eu/rest/v2/"
+})
+
 const useField = (type) => {
   const [value, setValue] = useState('')
 
@@ -18,7 +22,35 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect()
+  useEffect(() => {
+    
+    (async() => {
+      console.log('COUNTRY useEffect TRIGGERED')
+      if(name!==""){
+        try{
+          const countryResult = await restCountiresAxios({
+            method: "GET",
+            url: `/name/${name}?fullText=true`
+          })
+          if(countryResult.data && countryResult.data.length>0){
+            setCountry({
+              found: true,
+              data: countryResult.data[0]
+            })
+          }
+        }catch(e){
+          console.error(`useCountry|ERROR IN FETCHING COUNTRY`,e);
+          setCountry({
+            found: false,
+            data: null
+          })
+        }
+      }
+      
+      
+    })()
+
+  },[name])
 
   return country
 }
