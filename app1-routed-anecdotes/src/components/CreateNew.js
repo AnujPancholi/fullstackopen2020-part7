@@ -13,7 +13,8 @@ import {
 
 
 const CreateNew = (props) => {
-    const [content, setContent] = useState('')
+    // const [content, setContent] = useState('')
+    const content = useField("text");
     const [author, setAuthor] = useState('')
     const [info, setInfo] = useState('')
 
@@ -24,13 +25,13 @@ const CreateNew = (props) => {
       e.preventDefault()
 
       props.addNew({
-        content,
+        content: content.value,
         author,
         info,
         votes: 0
       })
 
-      addToast(`Anecdote "${content}" added`,{
+      addToast(`Anecdote "${content.value}" added`,{
         autoDismiss: true,
         appearance: "success"
       })
@@ -45,7 +46,7 @@ const CreateNew = (props) => {
         <form onSubmit={handleSubmit}>
           <div>
             content
-            <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+            <input name='content' value={content.value} onChange={content.onChange} />
           </div>
           <div>
             author
