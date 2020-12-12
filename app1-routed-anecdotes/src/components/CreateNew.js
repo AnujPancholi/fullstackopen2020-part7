@@ -15,8 +15,8 @@ import {
 const CreateNew = (props) => {
     // const [content, setContent] = useState('')
     const content = useField("text");
-    const [author, setAuthor] = useState('')
-    const [info, setInfo] = useState('')
+    const author = useField("text");
+    const info = useField("text");
 
     const history = useHistory();
     const {addToast} = useToasts();
@@ -26,8 +26,8 @@ const CreateNew = (props) => {
 
       props.addNew({
         content: content.value,
-        author,
-        info,
+        author: author.value,
+        info: info.value,
         votes: 0
       })
 
@@ -50,11 +50,11 @@ const CreateNew = (props) => {
           </div>
           <div>
             author
-            <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <input name='author' value={author.value} onChange={author.onChange} />
           </div>
           <div>
             url for more info
-            <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+            <input name='info' value={info.value} onChange={info.onChange} />
           </div>
           <button>create</button>
         </form>
