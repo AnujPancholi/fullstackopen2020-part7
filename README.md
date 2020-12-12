@@ -26,5 +26,9 @@ Simply made a `reset` function in the `useFields` hook, then made a `resetAll` f
 
 The warning was avoided, and according to the course, this exercise is already complete.
 
+## Exercise 7.7
+
+The exercise was to implement the `useEffect` hook within the `useCountry`custom hook. I implemented the same, making the required API call if a non-empty name is present passed, and if a result is found, put the first result in the `data` property with a `found` boolean (this seemed to be the format accepted by the existing `Country` component). If no result was found, the API would respond with a status code of 404 and the `found` boolean would be set to false with `data` set to null.
+
 
 ----
