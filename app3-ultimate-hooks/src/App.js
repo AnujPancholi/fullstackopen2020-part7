@@ -1,4 +1,3 @@
-  
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -21,9 +20,37 @@ const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
   // ...
+  useEffect(() => {
+    (async() => {
+      try{
+        const fetchResult = await axios({
+          method: "GET",
+          url: `${baseUrl}`
+        })
+
+        setResources(fetchResult.data);
+
+      }catch(e){
+        console.error(`useResource|ERROR IN FETCHING RESOURCE`,e);
+      }
+    })()
+  },[])
 
   const create = (resource) => {
-    // ...
+    (async() => {
+      try{
+        const creationResult = await axios({
+          method: "POST",
+          url: `${baseUrl}`,
+          data: resource
+        })
+
+        setResources(resources.concat(creationResult.data));
+
+      }catch(e){
+        console.error(`useResource|ERROR IN CREATING RESOURCE`,e);
+      }
+    })()
   }
 
   const service = {
