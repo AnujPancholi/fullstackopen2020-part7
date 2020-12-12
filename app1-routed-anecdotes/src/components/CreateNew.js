@@ -42,7 +42,7 @@ const CreateNew = (props) => {
 
     const resetAll = (e) => {
       e.preventDefault();
-      
+      //7.6 already completed
       content.reset();
       author.reset();
       info.reset();
