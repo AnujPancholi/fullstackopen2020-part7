@@ -18,5 +18,13 @@ Used the `useHistory` hook to change the path and render notification.
 
 First step was to make the actual hook, which I did in a new `hooks` directory and an `index.js` file with named exports as suggested in the course, then I simply imported it in the `CreateNew` component that contains the form to create new anecdotes, and used it for each of the fields.
 
+## Exercise 7.5
+
+Simply made a `reset` function in the `useFields` hook, then made a `resetAll` function triggered by a new button which calls `reset` for all fields.
+
+## Exercise 7.6
+
+The warning was avoided, and according to the course, this exercise is already complete.
+
 
 ----
