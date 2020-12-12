@@ -7,6 +7,9 @@ import {
 import {
   useHistory
 } from "react-router-dom";
+import {
+  useField
+} from "../hooks";
 
 
 const CreateNew = (props) => {
@@ -16,12 +19,6 @@ const CreateNew = (props) => {
 
     const history = useHistory();
     const {addToast} = useToasts();
-
-    const resetAllStates = () => {
-      setContent("");
-      setAuthor("");
-      setInfo("");
-    }
   
     const handleSubmit = (e) => {
       e.preventDefault()
@@ -33,16 +30,12 @@ const CreateNew = (props) => {
         votes: 0
       })
 
-      
-
       addToast(`Anecdote "${content}" added`,{
         autoDismiss: true,
         appearance: "success"
       })
 
       history.push("/");
-
-      // resetAllStates();
 
     }
   
