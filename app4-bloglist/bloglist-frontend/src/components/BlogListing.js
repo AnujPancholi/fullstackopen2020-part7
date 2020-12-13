@@ -5,11 +5,10 @@ import Blog from './Blog.js'
 import BlogEntryForm from './BlogEntryForm.js'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getBlogsPopulateAction } from '../reducers/blogsReducer.js'
+import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
 
 import CONSTANTS from '../lib/constants.js'
 
-import blogService from '../services/blogs.js'
 
 const BlogListing = ({ user,setUser }) => {
   const dispatch = useDispatch()
@@ -18,9 +17,10 @@ const BlogListing = ({ user,setUser }) => {
   })
 
   const refreshBlogList = () => {
-    blogService.getAll().then(blogs =>
-      dispatch(getBlogsPopulateAction(blogs))
-    )
+    // blogService.getAll().then(blogs =>
+    //   dispatch(getBlogsPopulateAction(blogs))
+    // )
+    dispatch(getBlogsPopulateActionAsync())
   }
 
   useEffect(() => {

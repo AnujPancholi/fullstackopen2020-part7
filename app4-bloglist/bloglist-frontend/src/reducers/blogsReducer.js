@@ -1,3 +1,5 @@
+import blogService from '../services/blogs.js'
+
 const blogsInitialState = []
 
 const blogsReducer = (state = blogsInitialState, action) => {
@@ -9,7 +11,6 @@ const blogsReducer = (state = blogsInitialState, action) => {
   }
 }
 
-
 export const getBlogsPopulateAction = (blogs) => {
   return {
     type: 'BLOGS_POPULATE',
@@ -17,6 +18,16 @@ export const getBlogsPopulateAction = (blogs) => {
   }
 }
 
+export const getBlogsPopulateActionAsync = () => {
+  return (async(dispatch) => {
+    try{
+      const blogs = await blogService.getAll()
+      dispatch(getBlogsPopulateAction(blogs))
+    }catch(e){
+      dispatch(getBlogsPopulateAction([]))
+    }
+  })
+}
 
 export default blogsReducer
 
