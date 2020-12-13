@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
+import {useDispatch} from 'react-redux'
+import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js'
+
 
 import LikesContainer from './LikesContainer.js'
 
@@ -14,6 +17,7 @@ import './css/Blog.css'
 const Blog = ({ blog, refreshBlogList, user }) => {
   const [isDetailsVisible,setIsDetailsVisible] = useState(false)
 
+  const dispatch = useDispatch()
   const { addToast } = useToasts()
 
   const detailsClassNames = isDetailsVisible ? '' : 'hidden'
@@ -30,12 +34,22 @@ const Blog = ({ blog, refreshBlogList, user }) => {
         refreshBlogList()
         addToast('Blog deleted',{
           appearance: 'success',
-          autoDismiss: true
+          autoDismiss: true,
+          onDismiss: () => {
+            dispatch(getNotificationHideAction())
+          }
+        },(toastId) => {
+          dispatch(getNotificationShowAction(toastId))
         })
       }catch(e){
         addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
           appearance: 'error',
-          autoDismiss: true
+          autoDismiss: true,
+          onDismiss: () => {
+            dispatch(getNotificationHideAction())
+          }
+        },(toastId) => {
+          dispatch(getNotificationShowAction(toastId))
         })
       }
     })()
@@ -53,7 +67,12 @@ const Blog = ({ blog, refreshBlogList, user }) => {
         }catch(e){
           addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
             appearance: 'error',
-            autoDismiss: true
+            autoDismiss: true,
+            onDismiss: () => {
+              dispatch(getNotificationHideAction())
+            }
+          },(toastId) => {
+            dispatch(getNotificationShowAction(toastId))
           })
           reject(e)
         }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 
-
 import './css/BlogEntryForm.css'
 
 import { useToasts } from 'react-toast-notifications'
 
 import blogService from '../services/blogs.js'
+
+import {useDispatch} from 'react-redux'
+import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js';
 
 
 
@@ -16,6 +18,7 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
   const [isVisible,setIsVisible] = useState(false)
 
   const { addToast } = useToasts()
+  const dispatch = useDispatch()
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value)
@@ -43,6 +46,11 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
         addToast(`Blog "${title}" added`,{
           appearance: 'success',
           autoDismiss: true,
+          onDismiss: () => {
+            dispatch(getNotificationHideAction());
+          }
+        },(toastId) => {
+          dispatch(getNotificationShowAction(toastId))
         })
 
         refreshBlogList()
@@ -52,6 +60,11 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
         addToast(e.message || 'AN ERROR OCCURRED',{
           appearance: 'error',
           autoDismiss: true,
+          onDismiss: () => {
+            dispatch(getNotificationHideAction())
+          }
+        },(toastId) => {
+          dispatch(getNotificationShowAction(toastId));
         })
       }
     })()
