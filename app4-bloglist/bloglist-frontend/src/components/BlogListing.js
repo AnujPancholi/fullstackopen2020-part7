@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Blog from './Blog.js'
@@ -17,9 +17,6 @@ const BlogListing = ({ user,setUser }) => {
   })
 
   const refreshBlogList = () => {
-    // blogService.getAll().then(blogs =>
-    //   dispatch(getBlogsPopulateAction(blogs))
-    // )
     dispatch(getBlogsPopulateActionAsync())
   }
 
