@@ -34,5 +34,24 @@ The exercise was to implement the `useEffect` hook within the `useCountry`custom
 
 First I implemented the `useEffect` callback in the `useResource` hook to fetch all the resources via a simple GET request, to then update the `resources` state with the result. Then I implemented the `create` function to make a POST request to create a new resouce, and since this request would return the new resource as created on the backend, I could just update the `resources` state by appending the new resouce to it.
 
+## Exercise 7.9
+
+First I added the `notificationReducer` with some necessary action creators, then added an `index.js` file in reducers directory with a combined reducer (of course at this point there is just one reducer to combine, but there will be more to combine eventually, so adding it now).
+
+At first the format of the state was the following:
+
+```
+{
+    notification: {
+        message: <string>,
+        options: <object of options passed to toasts of react-toast notifications>
+    }
+}
+```
+
+This was because I am using the `react-toast-notifications` library so it made sense to store the info to pass to it. I would then just check in whichever component I wanted if the `message` was non-empty, then call the `addToast` function provided by the `useToasts` hook. However, this posed a problem - apparantly `addToast` re-renders the component from which it is called - this method caused an infinite re-rendering which caused the app to eventually break.
+
+So, I went through the docs of the `react-toast-notifications` library and found that the third parameter to pass to `addToast` is a function which takes the `id` of the new toast, so that it can be stored, possibly for passing to `removeToast`. I decided to go with just one property, the id of the new toast stored in the `notification` property of the application's state. Then, when the toast would be dismissed, I would use the `onDismiss` function (passed as an option to `addToast`) to reset this to `null`.
+
 
 ----
