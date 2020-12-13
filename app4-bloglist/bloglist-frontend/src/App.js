@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { Provider } from 'react-redux'
+import store from './store.js'
 //components
 import BlogListing from './components/BlogListing.js'
 import LoginForm from './components/LoginForm.js'
@@ -29,14 +31,18 @@ const App = () => {
 
   return user===null ? (
     <div>
-      <ToastProvider>
-        <LoginForm setUser={setUser} />
-      </ToastProvider>
+      <Provider store={store}>
+        <ToastProvider>
+          <LoginForm setUser={setUser} />
+        </ToastProvider>
+      </Provider>
     </div>
   ) : (
-    <ToastProvider>
-      <BlogListing user={user} setUser={setUser} />
-    </ToastProvider>
+    <Provider store={store}>
+      <ToastProvider>
+        <BlogListing user={user} setUser={setUser} />
+      </ToastProvider>
+    </Provider>
   )
 }
 

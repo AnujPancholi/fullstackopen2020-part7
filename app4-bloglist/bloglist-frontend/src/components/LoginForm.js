@@ -6,10 +6,16 @@ import CONSTANTS from '../lib/constants.js'
 
 import { useToasts } from 'react-toast-notifications'
 
-const LoginForm = ({ setUser }) => {
+import { useSelector, useDispatch } from 'react-redux'
+import { getNotificationShowAction,getNotificationHideAction } from '../reducers/notificationReducer.js'
+import _ from 'lodash'
 
+const LoginForm = ({ setUser }) => {
+  const { addToast } = useToasts()
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
+
+  const dispatch = useDispatch()
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
@@ -24,8 +30,6 @@ const LoginForm = ({ setUser }) => {
     performLogin(username,password)
   }
 
-
-  const { addToast } = useToasts()
 
   const performLogin = (username,password) => {
     (async() => {
@@ -47,7 +51,12 @@ const LoginForm = ({ setUser }) => {
         console.error('performLogin|ERROR',e)
         addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
           appearance: 'error',
-          autoDismiss: true
+          autoDismiss: true,
+          onDismiss: () => {
+            dispatch(getNotificationHideAction())
+          }
+        },(toastId) => {
+          dispatch(getNotificationShowAction(toastId))
         })
       }
 
