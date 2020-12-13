@@ -3,18 +3,23 @@ import PropTypes from 'prop-types'
 
 import Blog from './Blog.js'
 import BlogEntryForm from './BlogEntryForm.js'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getBlogsPopulateAction } from '../reducers/blogsReducer.js'
 
 import CONSTANTS from '../lib/constants.js'
 
 import blogService from '../services/blogs.js'
 
 const BlogListing = ({ user,setUser }) => {
-
-  const [blogs,setBlogs] = useState([])
+  const dispatch = useDispatch()
+  const blogs = useSelector((state) => {
+    return state.blogs
+  })
 
   const refreshBlogList = () => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      dispatch(getBlogsPopulateAction(blogs))
     )
   }
 
