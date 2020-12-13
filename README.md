@@ -53,5 +53,11 @@ This was because I am using the `react-toast-notifications` library so it made s
 
 So, I went through the docs of the `react-toast-notifications` library and found that the third parameter to pass to `addToast` is a function which takes the `id` of the new toast, so that it can be stored, possibly for passing to `removeToast`. I decided to go with just one property, the id of the new toast stored in the `notification` property of the application's state. Then, when the toast would be dismissed, I would use the `onDismiss` function (passed as an option to `addToast`) to reset this to `null`.
 
+I know that the `notification` property in the state isn't directly causing the notification to show, but to change this I would have to abandon `react-toast-notifications` and that would take too much refactoring.
+
+![Notification in redux state](./supporting-screenshots/NOTIFICATION-STATE.png)
+
+All the cypress tests are passing at this point.
+
 
 ----
