@@ -89,7 +89,7 @@ const Blog = ({ blog, refreshBlogList, user }) => {
       <div className={detailsClassNames}>
         <hr />
         Blog URL: {blog.url}<br />
-        <LikesContainer likesCount={blog.likes} blogId={blog.id} addLike={addLike} />
+        <LikesContainer blog={blog} addLike={addLike} />
         <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
           Delete
         </button>

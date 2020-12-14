@@ -1,31 +1,19 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { getBlogLikeActionAsync } from '../reducers/blogsReducer.js';
 
 
 import './css/Blog.css'
 
 
-const LikesContainer = ({ likesCount, blogId, addLike }) => {
-  const [likes,setLikes] = useState(likesCount || 0)
 
-
-  const handleAddLike = async() => {
-    // (async() => {
-    try {
-      const likeAdditionResult = await addLike()
-      if(likeAdditionResult.isSuccessful){
-        setLikes(likes+1)
-      }
-    }catch(e){
-      console.error('ERROR',e)
-    }
-    // })()
-  }
-
-
+const LikesContainer = ({ blog, addLike }) => {
+  const blogId = blog.id
+  const dispatch = useDispatch()
 
   return (<>
-    <span className="likes-display" id={`blog-likes-display-${blogId}`}>Likes: {likes}</span> &nbsp;
-    <button className='like-button' onClick={handleAddLike} id={`blog-like-button-${blogId}`}>
+    <span className="likes-display" id={`blog-likes-display-${blogId}`}>Likes: {blog.likes}</span> &nbsp;
+    <button className='like-button' onClick={(() => dispatch(getBlogLikeActionAsync(blogId)))} id={`blog-like-button-${blogId}`}>
             Like
     </button>
   </>)
