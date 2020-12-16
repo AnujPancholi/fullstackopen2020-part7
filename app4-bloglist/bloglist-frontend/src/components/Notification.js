@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const Notification = () => {
 
-  const messageText = useSelector(state => state.notification_message.message)
+  const messageText = useSelector(state => state.notification.message)
 
   const getStyle = (isVisible=false) => {
     return {
@@ -14,7 +14,7 @@ const Notification = () => {
     }
   }
   return (
-    <div style={getStyle(typeof(messageText)==='string' && messageText.length>0)}>
+    <div className={'notification-container'} style={getStyle(typeof(messageText)==='string' && messageText.length>0)}>
       {messageText}
     </div>
   )

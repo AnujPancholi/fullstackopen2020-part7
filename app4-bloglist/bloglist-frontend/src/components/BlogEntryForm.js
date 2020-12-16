@@ -43,29 +43,17 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
           url: url
         },user.token)
 
-        addToast(`Blog "${title}" added`,{
-          appearance: 'success',
-          autoDismiss: true,
-          onDismiss: () => {
-            dispatch(getNotificationHideAction());
-          }
-        },(toastId) => {
-          dispatch(getNotificationShowAction(toastId))
-        })
+        dispatch(getNotificationShowAction(`Blog "${title}" added`,setTimeout(() => {
+          dispatch(getNotificationHideAction())
+        },5000)))
 
         refreshBlogList()
 
       }catch(e){
         console.error('BlogEntryForm|ERROR',e.message)
-        addToast(e.message || 'AN ERROR OCCURRED',{
-          appearance: 'error',
-          autoDismiss: true,
-          onDismiss: () => {
-            dispatch(getNotificationHideAction())
-          }
-        },(toastId) => {
-          dispatch(getNotificationShowAction(toastId));
-        })
+        dispatch(getNotificationShowAction(e.message || 'AN ERROR OCCURRED',setTimeout(() => {
+          dispatch(getNotificationHideAction())
+        },5000)))
       }
     })()
   }

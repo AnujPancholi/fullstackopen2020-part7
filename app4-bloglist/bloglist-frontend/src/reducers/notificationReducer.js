@@ -1,21 +1,33 @@
-const notificationInitialState = null
+const notificationInitialState = {
+  message: '',
+  timeout: null
+}
 
 const notificationReducer = (state = notificationInitialState, action) => {
   switch(action.type){
   case 'NOTIFICATION_SHOW':
-    return action.id
+    action.clearTimeout(state.timeout)
+    return {
+      message: action.message,
+      timeout: action.timeout
+    }
   case 'NOTIFICATION_HIDE':
-    return null
+    return {
+      message: '',
+      timeout: null
+    }
   default:
     return state
   }
 }
 
 
-export const getNotificationShowAction = (id) => {
+export const getNotificationShowAction = (message,timeout) => {
   return {
     type: 'NOTIFICATION_SHOW',
-    id: id
+    message: message,
+    timeout: timeout,
+    clearTimeout: window.clearTimeout.bind(window)
   }
 }
 

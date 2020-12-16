@@ -4,6 +4,7 @@ import store from './store.js'
 //components
 import BlogListing from './components/BlogListing.js'
 import LoginForm from './components/LoginForm.js'
+import Notification from './components/Notification.js'
 
 
 import CONSTANTS from './lib/constants.js'
@@ -33,6 +34,7 @@ const App = () => {
     <div>
       <Provider store={store}>
         <ToastProvider>
+          <Notification />
           <LoginForm setUser={setUser} />
         </ToastProvider>
       </Provider>
@@ -40,6 +42,7 @@ const App = () => {
   ) : (
     <Provider store={store}>
       <ToastProvider>
+        <Notification />
         <BlogListing user={user} setUser={setUser} />
       </ToastProvider>
     </Provider>

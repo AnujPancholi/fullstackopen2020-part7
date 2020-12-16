@@ -49,15 +49,9 @@ const LoginForm = ({ setUser }) => {
 
       } catch(e) {
         console.error('performLogin|ERROR',e)
-        addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
-          appearance: 'error',
-          autoDismiss: true,
-          onDismiss: () => {
-            dispatch(getNotificationHideAction())
-          }
-        },(toastId) => {
-          dispatch(getNotificationShowAction(toastId))
-        })
+        dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+          dispatch(getNotificationHideAction())
+        },5000)))
       }
 
     })()

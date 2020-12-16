@@ -32,25 +32,13 @@ const Blog = ({ blog, refreshBlogList, user }) => {
       try{
         const blogDeleteResult = await blogService.deleteBlog(blog.id,user.token)
         refreshBlogList()
-        addToast('Blog deleted',{
-          appearance: 'success',
-          autoDismiss: true,
-          onDismiss: () => {
-            dispatch(getNotificationHideAction())
-          }
-        },(toastId) => {
-          dispatch(getNotificationShowAction(toastId))
-        })
+        dispatch(getNotificationShowAction('Blog deleted',setTimeout(() => {
+          dispatch(getNotificationHideAction())
+        },5000)))
       }catch(e){
-        addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
-          appearance: 'error',
-          autoDismiss: true,
-          onDismiss: () => {
-            dispatch(getNotificationHideAction())
-          }
-        },(toastId) => {
-          dispatch(getNotificationShowAction(toastId))
-        })
+        dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+          dispatch(getNotificationHideAction())
+        },5000)))
       }
     })()
   }
@@ -65,15 +53,9 @@ const Blog = ({ blog, refreshBlogList, user }) => {
           })
 
         }catch(e){
-          addToast(e.message || 'AN UNKNOWN ERROR OCCURRED',{
-            appearance: 'error',
-            autoDismiss: true,
-            onDismiss: () => {
-              dispatch(getNotificationHideAction())
-            }
-          },(toastId) => {
-            dispatch(getNotificationShowAction(toastId))
-          })
+          dispatch(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+            dispatch(getNotificationHideAction())
+          },5000))
           reject(e)
         }
       })()

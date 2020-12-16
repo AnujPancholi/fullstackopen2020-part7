@@ -58,7 +58,7 @@ describe('Blog app', function() {
 
       cy.get('#login-button').click()
 
-      cy.get('.react-toast-notifications__container').should('contain','INCORRECT PASSWORD')
+      cy.get('.notification-container').should('contain','INCORRECT PASSWORD')
 
     })
 
