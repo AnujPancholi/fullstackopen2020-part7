@@ -1,17 +1,23 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+const Notification = () => {
 
+  const messageText = useSelector(state => state.notification_message.message)
 
-const NotificationContainer = () => {
-  const notification_info = useSelector((state) => {
-    return state.notification_info
-  })
-
-  return (<div className="notification-container">
-    {notification_info.message}
-  </div>)
+  const getStyle = (isVisible=false) => {
+    return {
+      border: 'solid',
+      padding: 10,
+      borderWidth: 1,
+      display: isVisible ? 'block' : 'none'
+    }
+  }
+  return (
+    <div style={getStyle(typeof(messageText)==='string' && messageText.length>0)}>
+      {messageText}
+    </div>
+  )
 }
 
-
-export default NotificationContainer
+export default Notification
