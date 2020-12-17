@@ -8,8 +8,11 @@ const Notification = () => {
   const getStyle = (isVisible=false) => {
     return {
       border: 'solid',
+      width: '25%',
       padding: 10,
       borderWidth: 1,
+      position: 'fixed',
+      backgroundColor: 'green',
       display: isVisible ? 'block' : 'none'
     }
   }
