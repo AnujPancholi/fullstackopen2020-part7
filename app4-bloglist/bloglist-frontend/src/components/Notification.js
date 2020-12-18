@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 const Notification = () => {
 
   const messageText = useSelector(state => state.notification.message)
+  const notifOptions = useSelector(state => state.notification.options || {})
 
   const getStyle = (isVisible=false) => {
     return {
@@ -16,7 +17,7 @@ const Notification = () => {
       borderWidth: 1,
       borderRadius: '20px',
       position: 'fixed',
-      backgroundColor: 'green',
+      backgroundColor: notifOptions && notifOptions.type==='error' ? 'red' : 'green',
       display: isVisible ? 'flex' : 'none',
       justifyContent: 'center'
     }
