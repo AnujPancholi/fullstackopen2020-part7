@@ -7,7 +7,7 @@ import './css/Blog.css'
 
 
 
-const LikesContainer = ({ blog, addLike }) => {
+const LikesContainer = ({ blog }) => {
   const blogId = blog.id
   const dispatch = useDispatch()
 

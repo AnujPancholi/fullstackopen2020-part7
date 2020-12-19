@@ -4,14 +4,13 @@ import loginService from '../services/login.js'
 
 import CONSTANTS from '../lib/constants.js'
 
-import { useToasts } from 'react-toast-notifications'
+
 
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotificationShowAction,getNotificationHideAction } from '../reducers/notificationReducer.js'
 import _ from 'lodash'
 
 const LoginForm = ({ setUser }) => {
-  const { addToast } = useToasts()
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
 
@@ -51,7 +50,9 @@ const LoginForm = ({ setUser }) => {
         console.error('performLogin|ERROR',e)
         dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
           dispatch(getNotificationHideAction())
-        },5000)))
+        },5000),{
+          type: 'error'
+        }))
       }
 
     })()
