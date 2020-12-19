@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import {useDispatch} from 'react-redux'
-import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js'
+import { useDispatch } from 'react-redux'
+
 
 
 import LikesContainer from './LikesContainer.js'
 
-import blogService from '../services/blogs.js'
 
 import './css/Blog.css'
+import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
 
 
 
@@ -26,21 +26,7 @@ const Blog = ({ blog, refreshBlogList, user }) => {
 
 
   const performBlogDelete = () => {
-    (async() => {
-      try{
-        const blogDeleteResult = await blogService.deleteBlog(blog.id,user.token)
-        refreshBlogList()
-        dispatch(getNotificationShowAction('Blog deleted',setTimeout(() => {
-          dispatch(getNotificationHideAction())
-        },5000)))
-      }catch(e){
-        dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
-          dispatch(getNotificationHideAction())
-        },5000),{
-          type: 'error'
-        }))
-      }
-    })()
+    dispatch(getBlogDeleteActionAsync(blog.id,user.token))
   }
 
   return (

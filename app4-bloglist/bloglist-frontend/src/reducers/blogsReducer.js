@@ -18,6 +18,8 @@ const blogsReducer = (state = blogsInitialState, action) => {
       } : {}
     )
     )
+  case 'BLOG_DELETE':
+    return _.filter(state,(blog) => blog.id!==action.blogId)
   default:
     return state
   }
@@ -70,6 +72,33 @@ export const getBlogLikeActionAsync = (id) => {
 //---
 
 //action creators for deleting a blog
+export const getBlogDeleteAction = (id) => {
+  return {
+    type: 'BLOG_DELETE',
+    blogId: id
+  }
+}
+
+export const getBlogDeleteActionAsync = (id,token) => {
+  return (async(dispatch) => {
+    try{
+      const blogDeleteResult = await blogService.deleteBlog(id,token)
+      dispatch(getBlogDeleteAction(id))
+      dispatch(getNotificationShowAction('Blog deleted',setTimeout(() => {
+        dispatch(getNotificationHideAction())
+      },5000)))
+
+    }catch(e){
+      console.error('getBlogDeleteActionAsync|ERROR',e)
+      dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+        dispatch(getNotificationHideAction())
+      },5000),{
+        type: 'error'
+      }))
+
+    }
+  })
+}
 
 //---
 
