@@ -22,6 +22,7 @@ const blogsReducer = (state = blogsInitialState, action) => {
   }
 }
 
+//action creators for fetching all blogs
 export const getBlogsPopulateAction = (blogs) => {
   return {
     type: 'BLOGS_POPULATE',
@@ -40,8 +41,9 @@ export const getBlogsPopulateActionAsync = () => {
     }
   })
 }
+//---
 
-
+//action creators for liking a blog
 export const getBlogLikeAction = (id) => {
   return {
     type: 'BLOGS_LIKE',
@@ -59,6 +61,7 @@ export const getBlogLikeActionAsync = (id) => {
     }
   })
 }
+//---
 
 export default blogsReducer
 
