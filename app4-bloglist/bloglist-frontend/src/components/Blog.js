@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useToasts } from 'react-toast-notifications'
 import {useDispatch} from 'react-redux'
 import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js'
 
@@ -18,7 +17,6 @@ const Blog = ({ blog, refreshBlogList, user }) => {
   const [isDetailsVisible,setIsDetailsVisible] = useState(false)
 
   const dispatch = useDispatch()
-  const { addToast } = useToasts()
 
   const detailsClassNames = isDetailsVisible ? '' : 'hidden'
 
@@ -38,7 +36,9 @@ const Blog = ({ blog, refreshBlogList, user }) => {
       }catch(e){
         dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
           dispatch(getNotificationHideAction())
-        },5000)))
+        },5000),{
+          type: 'error'
+        }))
       }
     })()
   }
@@ -53,9 +53,11 @@ const Blog = ({ blog, refreshBlogList, user }) => {
           })
 
         }catch(e){
-          dispatch(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+          dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
             dispatch(getNotificationHideAction())
-          },5000))
+          },5000),{
+            type: 'error'
+          }))
           reject(e)
         }
       })()

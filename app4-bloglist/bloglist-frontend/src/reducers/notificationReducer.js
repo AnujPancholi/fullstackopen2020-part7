@@ -1,6 +1,7 @@
 const notificationInitialState = {
   message: '',
-  timeout: null
+  timeout: null,
+  options: {}
 }
 
 const notificationReducer = (state = notificationInitialState, action) => {
@@ -9,12 +10,14 @@ const notificationReducer = (state = notificationInitialState, action) => {
     action.clearTimeout(state.timeout)
     return {
       message: action.message,
-      timeout: action.timeout
+      timeout: action.timeout,
+      options: action.options || {}
     }
   case 'NOTIFICATION_HIDE':
     return {
       message: '',
-      timeout: null
+      timeout: null,
+      options: {}
     }
   default:
     return state
@@ -22,11 +25,12 @@ const notificationReducer = (state = notificationInitialState, action) => {
 }
 
 
-export const getNotificationShowAction = (message,timeout) => {
+export const getNotificationShowAction = (message,timeout,options={}) => {
   return {
     type: 'NOTIFICATION_SHOW',
     message: message,
     timeout: timeout,
+    options: options,
     clearTimeout: window.clearTimeout.bind(window)
   }
 }

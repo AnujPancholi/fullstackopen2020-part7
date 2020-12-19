@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 
 import './css/BlogEntryForm.css'
 
-import { useToasts } from 'react-toast-notifications'
-
 import blogService from '../services/blogs.js'
 
 import {useDispatch} from 'react-redux'
@@ -17,7 +15,6 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
   const [url,setUrl] = useState('')
   const [isVisible,setIsVisible] = useState(false)
 
-  const { addToast } = useToasts()
   const dispatch = useDispatch()
 
   const handleTitleChange = (event) => {
@@ -53,7 +50,9 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
         console.error('BlogEntryForm|ERROR',e.message)
         dispatch(getNotificationShowAction(e.message || 'AN ERROR OCCURRED',setTimeout(() => {
           dispatch(getNotificationHideAction())
-        },5000)))
+        },5000),{
+          type: 'error'
+        }))
       }
     })()
   }
