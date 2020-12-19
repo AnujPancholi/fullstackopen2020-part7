@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+import { getNotificationHideAction,getNotificationShowAction } from './notificationReducer.js'
 import blogService from '../services/blogs.js'
 
 const blogsInitialState = []
@@ -58,9 +59,18 @@ export const getBlogLikeActionAsync = (id) => {
       dispatch(getBlogLikeAction(id))
     }catch(e){
       console.error('getBlogLikeActionAsync|ERROR',e)
+      dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
+        dispatch(getNotificationHideAction())
+      },5000),{
+        type: 'error'
+      }))
     }
   })
 }
+//---
+
+//action creators for deleting a blog
+
 //---
 
 export default blogsReducer

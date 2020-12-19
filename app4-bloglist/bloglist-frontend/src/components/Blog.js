@@ -43,27 +43,6 @@ const Blog = ({ blog, refreshBlogList, user }) => {
     })()
   }
 
-  const addLike = () => {
-    return new Promise((resolve,reject) => {
-      (async() => {
-        try{
-          const likeAdditionResult = await blogService.addLikeToBlog(blog.id)
-          resolve({
-            isSuccessful: true
-          })
-
-        }catch(e){
-          dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
-            dispatch(getNotificationHideAction())
-          },5000),{
-            type: 'error'
-          }))
-          reject(e)
-        }
-      })()
-    })
-  }
-
   return (
     <div className="blog-container" id={`blog-container-${blog.id}`}>
       <div className="blog-title" data-title={blog.title} data-blogid={blog.id} data-userid={blog.user.id}>
@@ -73,7 +52,7 @@ const Blog = ({ blog, refreshBlogList, user }) => {
       <div className={detailsClassNames}>
         <hr />
         Blog URL: {blog.url}<br />
-        <LikesContainer blog={blog} addLike={addLike} />
+        <LikesContainer blog={blog} />
         <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
           Delete
         </button>
