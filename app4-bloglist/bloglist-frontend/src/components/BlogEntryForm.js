@@ -6,6 +6,7 @@ import blogService from '../services/blogs.js'
 
 import {useDispatch} from 'react-redux'
 import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js';
+import { getBlogAddActionAsync } from '../reducers/blogsReducer.js'
 
 
 
@@ -26,35 +27,11 @@ const BlogEntryForm = ({ refreshBlogList, user }) => {
   }
 
   const handleAddBlogSubmit = (event) => {
-    (async() => {
-      event.preventDefault()
-      try{
-
-        if(title.length===0 || url.length===0){
-          console.log('handleAddBlogSubmit err condition')
-          throw new Error('Fields cannot be empty')
-        }
-
-        const addBlogResult = await blogService.addNewBlog({
-          title: title,
-          url: url
-        },user.token)
-
-        dispatch(getNotificationShowAction(`Blog "${title}" added`,setTimeout(() => {
-          dispatch(getNotificationHideAction())
-        },5000)))
-
-        refreshBlogList()
-
-      }catch(e){
-        console.error('BlogEntryForm|ERROR',e.message)
-        dispatch(getNotificationShowAction(e.message || 'AN ERROR OCCURRED',setTimeout(() => {
-          dispatch(getNotificationHideAction())
-        },5000),{
-          type: 'error'
-        }))
-      }
-    })()
+    event.preventDefault()
+    dispatch(getBlogAddActionAsync({
+      title: title,
+      url: url
+    },user))
   }
 
   const toggleFormVisibility = () => {

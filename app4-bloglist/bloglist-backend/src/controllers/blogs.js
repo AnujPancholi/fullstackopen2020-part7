@@ -119,7 +119,8 @@ blogRouter.post('/', tokenValidator, (request, response, next) => {
       resultObj.error = null;
       resultObj.data = {
         message: "BLOG SAVED",
-        id: blogSaveResult._id.toString()
+        id: blogSaveResult._id.toString(),
+        blog: blogSaveResult
       }
       resultObj.resCode = 200;
 

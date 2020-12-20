@@ -9,6 +9,8 @@ const blogsReducer = (state = blogsInitialState, action) => {
   switch (action.type) {
   case 'BLOGS_POPULATE':
     return Array.isArray(action.blogs) ? action.blogs : state
+  case 'BLOGS_ADD':
+    return state.concat(action.blog)
   case 'BLOGS_LIKE':
     return _.map(state,(blog) => _.merge(
       {},
@@ -44,6 +46,41 @@ export const getBlogsPopulateActionAsync = () => {
     }
   })
 }
+//---
+
+//action creators for adding a blog
+export const getBlogAddAction = (blog) => {
+  return {
+    type: 'BLOGS_ADD',
+    blog: blog
+  }
+}
+
+export const getBlogAddActionAsync = (blogInfo,user) => {
+  return (async(dispatch) => {
+    try{
+      const blogAddResult = await blogService.addNewBlog(blogInfo,user.token)
+      dispatch(getBlogAddAction({
+        ...blogAddResult.blog,
+        user: {
+          id: user.id,
+          username: user.username,
+          name: user.name
+        }
+      }))
+      dispatch(getNotificationShowAction(`Blog "${blogAddResult.blog.title}" added`,setTimeout(() => {
+        dispatch(getNotificationHideAction())
+      },5000)))
+    }catch(e){
+      dispatch(getNotificationShowAction(e.message || 'AN ERROR OCCURRED',setTimeout(() => {
+        dispatch(getNotificationHideAction())
+      },5000),{
+        type: 'error'
+      }))
+    }
+  })
+}
+
 //---
 
 //action creators for liking a blog
