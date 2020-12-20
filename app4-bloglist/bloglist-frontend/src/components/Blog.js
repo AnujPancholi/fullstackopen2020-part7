@@ -13,7 +13,7 @@ import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
 
 
 
-const Blog = ({ blog, refreshBlogList, user }) => {
+const Blog = ({ blog, user }) => {
   const [isDetailsVisible,setIsDetailsVisible] = useState(false)
 
   const dispatch = useDispatch()

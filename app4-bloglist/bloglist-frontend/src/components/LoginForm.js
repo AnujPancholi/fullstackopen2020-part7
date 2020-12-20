@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { getLoginActionAsync } from '../reducers/loginReducer.js'
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
 

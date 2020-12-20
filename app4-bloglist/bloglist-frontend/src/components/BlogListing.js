@@ -6,11 +6,10 @@ import BlogEntryForm from './BlogEntryForm.js'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
+import { getLogoutAction } from '../reducers/loginReducer.js'
 
-import CONSTANTS from '../lib/constants.js'
 
-
-const BlogListing = ({ user,setUser }) => {
+const BlogListing = ({ user }) => {
   const dispatch = useDispatch()
   const blogs = useSelector((state) => {
     return state.blogs
@@ -25,24 +24,22 @@ const BlogListing = ({ user,setUser }) => {
   }, [])
 
   const logout = () => {
-    localStorage.removeItem(CONSTANTS.LS_LOGIN_NAME)
-    setUser(null)
+    dispatch(getLogoutAction())
   }
 
 
   return (<div>
     <p>Hello, {user.username} <button onClick={logout}>logout</button> </p>
-    <BlogEntryForm refreshBlogList={refreshBlogList} user={user} />
+    <BlogEntryForm user={user} />
     <h2>blogs</h2>
     {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} refreshBlogList={refreshBlogList} user={user} />
+      <Blog key={blog.id} blog={blog} user={user} />
     )}
   </div>)
 }
 
 BlogListing.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired
 }
 
 export default BlogListing

@@ -20,7 +20,6 @@ const loginReducer = (state = loginInitialState,action) => {
 
 
 //action creators for login
-
 export const getLoginAction = (authInfo) => {
   return {
     type: 'AUTH_LOGIN',
@@ -34,14 +33,10 @@ export const getLoginActionAsync = (inputUsername,inputPass) => {
     try {
       const loginResult = await loginService.login(inputUsername,inputPass)
       if(loginResult.data && loginResult.data.message){
-        // if(loginResult.data.message==='LOGIN SUCCESSFUL'){
-        //   localStorage.setItem(CONSTANTS.LS_LOGIN_NAME,JSON.stringify(loginResult.data))
-        // } else {
-        //   throw new Error(loginResult.data.message)
-        // }
         if(loginResult.data.message!=='LOGIN SUCCESSFUL'){
           throw new Error(loginResult.data.message || 'ERROR IN LOGIN')
         }
+        localStorage.setItem(CONSTANTS.LS_LOGIN_NAME,JSON.stringify(loginResult))
         dispatch(getLoginAction(loginResult))
       } else {
         throw new Error('MALFORMED RESPONSE FROM LOGIN SERVICE')
@@ -55,6 +50,15 @@ export const getLoginActionAsync = (inputUsername,inputPass) => {
       }))
     }
   })
+}
+//---
+
+//action creators for logout
+export const getLogoutAction = () => {
+  localStorage.removeItem(CONSTANTS.LS_LOGIN_NAME)
+  return {
+    type: 'AUTH_LOGOUT'
+  }
 }
 
 
