@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Provider } from 'react-redux'
-import store from './store.js'
+import { useDispatch, useSelector } from 'react-redux'
+
 //components
 import BlogListing from './components/BlogListing.js'
 import LoginForm from './components/LoginForm.js'
 import Notification from './components/Notification.js'
+
+import { getLoginAction } from './reducers/loginReducer.js'
 
 
 import CONSTANTS from './lib/constants.js'
@@ -13,7 +15,14 @@ import { ToastProvider } from 'react-toast-notifications'
 
 const App = () => {
 
-  const [user,setUser] = useState(null)
+  const dispatch = useDispatch()
+
+  // const [user,setUser] = useState(null)
+  const user = useSelector((state) => state.auth)
+
+  const setUser = (authInfo) => {
+    dispatch(getLoginAction(authInfo))
+  }
 
   useEffect(() => {
     const currentLoginBlob = localStorage.getItem(CONSTANTS.LS_LOGIN_NAME)
@@ -21,7 +30,11 @@ const App = () => {
     try{
       if(currentLoginBlob){
         currUser = JSON.parse(currentLoginBlob)
-        setUser(currUser)
+        if(currUser){
+          dispatch(getLoginAction(currUser))
+        } else {
+          dispatch(getLoginAction({}))
+        }
       }
     }catch(e){
       console.error('USER|ERROR|MALFORMED USER BLOB',e)
@@ -32,20 +45,19 @@ const App = () => {
 
   return user===null ? (
     <div>
-      <Provider store={store}>
-        <ToastProvider>
-          <Notification />
-          <LoginForm setUser={setUser} />
-        </ToastProvider>
-      </Provider>
+      <ToastProvider>
+        <Notification />
+        <LoginForm setUser={setUser} />
+      </ToastProvider>
+
     </div>
   ) : (
-    <Provider store={store}>
+    <div>
       <ToastProvider>
         <Notification />
         <BlogListing user={user} setUser={setUser} />
       </ToastProvider>
-    </Provider>
+    </div>
   )
 }
 

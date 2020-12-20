@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
 
-import loginService from '../services/login.js'
+import { useDispatch } from 'react-redux'
 
-import CONSTANTS from '../lib/constants.js'
-
-
-
-import { useSelector, useDispatch } from 'react-redux'
-import { getNotificationShowAction,getNotificationHideAction } from '../reducers/notificationReducer.js'
-import _ from 'lodash'
+import { getLoginActionAsync } from '../reducers/loginReducer.js'
 
 const LoginForm = ({ setUser }) => {
   const [username,setUsername] = useState('')
@@ -31,31 +25,7 @@ const LoginForm = ({ setUser }) => {
 
 
   const performLogin = (username,password) => {
-    (async() => {
-      console.log(`LOGIN CALLED: ${username}:${password}`)
-      try {
-        const loginResult = await loginService.login(username,password)
-        if(loginResult.data && loginResult.data.message){
-          if(loginResult.data.message==='LOGIN SUCCESSFUL'){
-            setUser(loginResult.data)
-            localStorage.setItem(CONSTANTS.LS_LOGIN_NAME,JSON.stringify(loginResult.data))
-          } else {
-            throw new Error(loginResult.data.message)
-          }
-        } else {
-          throw new Error('MALFORMED RESPONSE FROM LOGIN SERVICE')
-        }
-
-      } catch(e) {
-        console.error('performLogin|ERROR',e)
-        dispatch(getNotificationShowAction(e.message || 'AN UNKNOWN ERROR OCCURRED',setTimeout(() => {
-          dispatch(getNotificationHideAction())
-        },5000),{
-          type: 'error'
-        }))
-      }
-
-    })()
+    dispatch(getLoginActionAsync(username,password))
   }
 
 
