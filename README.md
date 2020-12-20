@@ -65,6 +65,8 @@ All the cypress tests are passing at this point.
 
 I am using the same frontend and backend as I had used in parts 4 and 5, and in those parts I had created a functin `refreshBlogList` which would make the API call to fetch all blogs and populate them in the state of the `BlogListing` component. So, all I have had to do for this exercise is to make an async action creator for populating the blogs, and call `dispatch` using that in the `refreshBlogList` function. This would handle both the cases for this exercise, i.e, ppopulating all blogs and adding a new blog (function is passed as a prop to `BlogEntryForm` which uses that to refresh the blog list after a new blog is created).
 
+**NOTE:** This approach is something I changed later, shifting the functionality to use the backend service in the `blogsReducer` itself.
+
 ## Exercise 7.11
 
 I finally refactored the application to stop using `react-toast-notification` and use my own `Notification` component that takes content directly from the redux application state. Also, all invocations to any method of the `blogs` service that interacts with the backend has been shifted to the blogs reducer with async action creators using the `redux-thunk` middleware.
