@@ -43,19 +43,11 @@ const App = () => {
 
   console.log('STATE: USER: ',user)
 
-  return user===null ? (
+  return (
     <div>
       <ToastProvider>
         <Notification />
-        <LoginForm />
-      </ToastProvider>
-
-    </div>
-  ) : (
-    <div>
-      <ToastProvider>
-        <Notification />
-        <BlogListing user={user} />
+        {user===null ? <LoginForm /> : <BlogListing user={user} />}
       </ToastProvider>
     </div>
   )
