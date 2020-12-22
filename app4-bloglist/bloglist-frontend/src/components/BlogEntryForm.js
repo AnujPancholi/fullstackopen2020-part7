@@ -2,20 +2,18 @@ import React, { useState } from 'react'
 
 import './css/BlogEntryForm.css'
 
-import blogService from '../services/blogs.js'
+import { useDispatch, useSelector } from 'react-redux'
 
-import {useDispatch} from 'react-redux'
-import {getNotificationShowAction,getNotificationHideAction} from '../reducers/notificationReducer.js';
 import { getBlogAddActionAsync } from '../reducers/blogsReducer.js'
 
 
 
-const BlogEntryForm = ({ refreshBlogList, user }) => {
+const BlogEntryForm = () => {
 
   const [title,setTitle] = useState('')
   const [url,setUrl] = useState('')
   const [isVisible,setIsVisible] = useState(false)
-
+  const user = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const handleTitleChange = (event) => {
