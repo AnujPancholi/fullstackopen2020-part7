@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 
@@ -13,9 +13,9 @@ import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
 
 
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
   const [isDetailsVisible,setIsDetailsVisible] = useState(false)
-
+  const user = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const detailsClassNames = isDetailsVisible ? '' : 'hidden'
