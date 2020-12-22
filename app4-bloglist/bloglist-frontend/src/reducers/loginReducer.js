@@ -37,7 +37,7 @@ export const getLoginActionAsync = (inputUsername,inputPass) => {
           throw new Error(loginResult.data.message || 'ERROR IN LOGIN')
         }
         localStorage.setItem(CONSTANTS.LS_LOGIN_NAME,JSON.stringify(loginResult))
-        dispatch(getLoginAction(loginResult))
+        dispatch(getLoginAction(loginResult.data))
       } else {
         throw new Error('MALFORMED RESPONSE FROM LOGIN SERVICE')
       }

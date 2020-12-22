@@ -47,7 +47,7 @@ const App = () => {
     <div>
       <ToastProvider>
         <Notification />
-        {user===null ? <LoginForm /> : <BlogListing user={user} />}
+        {user===null ? <LoginForm /> : <BlogListing />}
       </ToastProvider>
     </div>
   )

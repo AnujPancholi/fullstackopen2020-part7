@@ -9,8 +9,11 @@ import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
 import { getLogoutAction } from '../reducers/loginReducer.js'
 
 
-const BlogListing = ({ user }) => {
+const BlogListing = ({ }) => {
   const dispatch = useDispatch()
+  const user = useSelector((state) => {
+    return state.auth
+  })
   const blogs = useSelector((state) => {
     return state.blogs
   })
