@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 //components
@@ -16,13 +16,7 @@ import { ToastProvider } from 'react-toast-notifications'
 const App = () => {
 
   const dispatch = useDispatch()
-
-  // const [user,setUser] = useState(null)
   const user = useSelector((state) => state.auth)
-
-  const setUser = (authInfo) => {
-    dispatch(getLoginAction(authInfo))
-  }
 
   useEffect(() => {
     const currentLoginBlob = localStorage.getItem(CONSTANTS.LS_LOGIN_NAME)

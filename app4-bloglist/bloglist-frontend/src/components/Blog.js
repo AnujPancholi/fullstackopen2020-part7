@@ -38,7 +38,7 @@ const Blog = ({ blog }) => {
       <div className={detailsClassNames}>
         <hr />
         Blog URL: {blog.url}<br />
-        <LikesContainer />
+        <LikesContainer blog={blog} />
         <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
           Delete
         </button>

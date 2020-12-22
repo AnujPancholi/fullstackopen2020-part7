@@ -9,7 +9,7 @@ import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
 import { getLogoutAction } from '../reducers/loginReducer.js'
 
 
-const BlogListing = ({ }) => {
+const BlogListing = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => {
     return state.auth
@@ -41,8 +41,5 @@ const BlogListing = ({ }) => {
   </div>)
 }
 
-BlogListing.propTypes = {
-  user: PropTypes.object.isRequired
-}
 
 export default BlogListing
