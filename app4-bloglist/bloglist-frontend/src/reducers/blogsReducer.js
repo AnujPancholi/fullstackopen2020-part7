@@ -28,7 +28,7 @@ const blogsReducer = (state = blogsInitialState, action) => {
 }
 
 //action creators for fetching all blogs
-export const getBlogsPopulateAction = (blogs) => {
+const getBlogsPopulateAction = (blogs) => {
   return {
     type: 'BLOGS_POPULATE',
     blogs: blogs
@@ -49,7 +49,7 @@ export const getBlogsPopulateActionAsync = () => {
 //---
 
 //action creators for adding a blog
-export const getBlogAddAction = (blog) => {
+const getBlogAddAction = (blog) => {
   return {
     type: 'BLOGS_ADD',
     blog: blog
