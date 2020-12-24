@@ -113,10 +113,6 @@ userRouter.get('/',(req,res,next) => {
       resCode: 500
     }
     try {
-      // const users = await UserModel.find({},{
-      //   auth: 0
-      // });
-
       const users = await UserModel.aggregate([{
         $match: {
 
