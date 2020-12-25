@@ -172,7 +172,7 @@ userRouter.get('/',(req,res,next) => {
 })
 
 
-userRouter.get('/:userId',(req,res,next) => {
+userRouter.get('/fetch/:userId',(req,res,next) => {
   (async() => {
     const resultObj = {
       success: false,
@@ -245,6 +245,73 @@ userRouter.get('/:userId',(req,res,next) => {
     next(resultObj);
 
   })();
+})
+
+
+userRouter.get('/stats',async(req,res,next) => {
+  const resultObj = {
+    success: false,
+    error: null,
+    data: null,
+    resCode: 500
+  }
+
+  try{
+
+    const userStatsResults = await UserModel.aggregate([{
+      $match: {
+
+      }
+    }, {
+      $lookup: {
+        "from": "blogs",
+        "let": {
+          "userId": "$_id"
+        },
+        "pipeline": [{
+          $match: {
+            $expr: {
+              $eq: ["$userId","$$userId"]
+            }
+          }
+        },{
+          $group: {
+            _id: null,
+            count: {
+              $sum: 1
+            }
+          }
+        }],
+        "as": "blogs"
+      }
+    },{
+      $unwind: "$blogs"
+    },{
+      $project: {
+        "id": "$_id",
+        "_id": 0,
+        "username": 1,
+        "name": 1,
+        "user_type": 1,
+        "blogs_count": "$blogs.count"
+      }
+    }])
+
+    resultObj.success = true;
+    resultObj.data = userStatsResults;
+    resultObj.error = null;
+    resultObj.resCode = 200;
+
+  }catch(e){
+    resultObj.success = false;
+    resultObj.data = null;
+    resultObj.error = resultObj.error ? resultObj.error : {
+      message: e.message || "INTERNAL SERVER ERROR"
+    };
+    resultObj.resCode = resultObj.resCode>=400 ? resultObj.resCode : 500;
+  }
+
+  next(resultObj)
 })
 
 
