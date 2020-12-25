@@ -3,7 +3,7 @@
 const userRouter = require("express").Router();
 const UserModel = require("../models/users.js");
 const logger = require('../utils/logger.js');
-// const mongooseUtils = require("../utils/mongooseUtils.js");
+const mongooseUtils = require("../utils/mongooseUtils.js");
 const bcrypt = require('bcrypt');
 
 
@@ -156,6 +156,82 @@ userRouter.get('/',(req,res,next) => {
       resultObj.error = null;
       resultObj.resCode = 200;
       resultObj.data = users;
+
+    } catch(e) {
+      resultObj.success = false;
+      resultObj.data = null;
+      resultObj.error = resultObj.error ? resultObj.error : {
+        message: e.message || "INTERNAL SERVER ERROR"
+      };
+      resultObj.resCode = resultObj.resCode>=400 ? resultObj.resCode : 500;
+    }
+
+    next(resultObj);
+
+  })();
+})
+
+
+userRouter.get('/:userId',(req,res,next) => {
+  (async() => {
+    const resultObj = {
+      success: false,
+      error: null,
+      data: null,
+      resCode: 500
+    }
+    try {
+      const [ targetUser ] = await UserModel.aggregate([{
+        $match: {
+          _id: mongooseUtils.getObjectId(req.params.userId)
+        }
+      },{
+        $lookup: {
+          "from": "blogs",
+          "let": {
+            "userId": "$_id"
+          },
+          "pipeline": [{
+            $match: {
+              $expr: {
+                $eq: ["$userId","$$userId"]
+              }
+            }
+          },{
+            $project: {
+              "id": "$_id",
+              "_id": 0,
+              "title": 1,
+              "author": 1,
+              "url": 1,
+              "likes": 1
+            }
+          }],
+          "as": "blogs"
+        }
+      },{
+        $project: {
+          "id": "$_id",
+          "_id": 0,
+          "username": 1,
+          "name": 1,
+          "user_type": 1,
+          "blogs": 1
+        }
+      }])
+
+      if(!targetUser){
+        resultObj.error = {
+          message: "USER NOT FOUND"
+        }
+        resultObj.resCode = 404
+        throw new Error("USER NOT FOUND")
+      }
+
+      resultObj.success = true;
+      resultObj.error = null;
+      resultObj.resCode = 200;
+      resultObj.data = targetUser;
 
     } catch(e) {
       resultObj.success = false;
