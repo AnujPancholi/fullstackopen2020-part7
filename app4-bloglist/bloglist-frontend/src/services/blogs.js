@@ -39,7 +39,7 @@ const addNewBlog = (blogDetails,token) => {
           })
         } else {
           reject({
-            method: 'AN ERROR OCCURRED'
+            message: 'AN ERROR OCCURRED'
           })
         }
       }
