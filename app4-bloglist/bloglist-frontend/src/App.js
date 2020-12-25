@@ -2,10 +2,16 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 //components
-import BlogListing from './components/BlogListing.js'
+import MainView from './components/MainView'
 import LoginForm from './components/LoginForm.js'
 import Notification from './components/Notification.js'
+import RouterNavbar from './components/RouterNavbar.js'
 
+import {
+  BrowserRouter as Router
+} from 'react-router-dom'
+
+//redux stuff
 import { getLoginAction } from './reducers/loginReducer.js'
 
 
@@ -39,10 +45,13 @@ const App = () => {
 
   return (
     <div>
-      <ToastProvider>
-        <Notification />
-        {user===null ? <LoginForm /> : <BlogListing />}
-      </ToastProvider>
+      <Router>
+        <ToastProvider>
+          <Notification />
+          <RouterNavbar />
+          {user===null ? <LoginForm /> : <MainView />}
+        </ToastProvider>
+      </Router>
     </div>
   )
 }
