@@ -4,11 +4,16 @@ import { getUserStatsPopulateActionAsync } from '../reducers/userStatsReducer.js
 
 
 const StatContainer = ({ userStatsObj }) => {
-  return (<div>
-        Username: {userStatsObj.username}
-    <br />
-        Number of Blogs: {userStatsObj.blogs_count}
-  </div>)
+  return (<>
+    <tr>
+      <td>
+        {userStatsObj.username}
+      </td>
+      <td>
+        {userStatsObj.blogs_count}
+      </td>
+    </tr>
+  </>)
 }
 
 const UserStats = () => {
@@ -24,9 +29,17 @@ const UserStats = () => {
   },[])
 
   return (<div>
-    {userStats ? userStats.map(userStatsObj => (
-      <StatContainer key={userStatsObj.id} userStatsObj={userStatsObj} />
-    )) : <div>NA</div>}
+    {userStats ? (<>
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>Number of Blogs</th>
+        </tr>
+        {userStats.map(userStatsObj => (
+          <StatContainer key={userStatsObj.id} userStatsObj={userStatsObj} />
+        ))}
+      </table>
+    </>) : <div>NA</div>}
   </div>)
 
 }
