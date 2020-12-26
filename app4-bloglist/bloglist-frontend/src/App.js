@@ -48,8 +48,7 @@ const App = () => {
       <Router>
         <ToastProvider>
           <Notification />
-          <RouterNavbar />
-          {user===null ? <LoginForm /> : <MainView />}
+          {user===null ? <LoginForm /> : (<><RouterNavbar /><MainView /></>)}
         </ToastProvider>
       </Router>
     </div>
