@@ -71,5 +71,17 @@ I am using the same frontend and backend as I had used in parts 4 and 5, and in 
 
 I finally refactored the application to stop using `react-toast-notification` and use my own `Notification` component that takes content directly from the redux application state. Also, all invocations to any method of the `blogs` service that interacts with the backend has been shifted to the blogs reducer with async action creators using the `redux-thunk` middleware.
 
+## Exercise 7.12
+
+Implemented the necessary reducer, action creators to store info of logged-in user to store and a `useEffect` in the App component to pick user data from `localStorage`.
+
+## Exercise 7.13
+
+First, made a new endpoint on the backend to aggregate the user stats for the frontend. Then I made a new `users` service which would communicate with the backend to fetch said data. The I implemented routing on the frontend, with just a simple message to be displayed in the required user view, as I was yet to implement the component that would be rendered in this view.
+
+At any given time, we would need to store that data which is to be displayed in the `UserStats` component, used in the user view. So, I invented a new property in the redux store `user_stats` that would store the response of the `/users/stats` API endpoint and implemented the reducer and action creators for it.
+
+Then I implemented the actual `UserStats` component that would show this data in the form of a table. The stats for each user would be dispalyed by a component that renders a table row for that particular user.
+
 
 ----
