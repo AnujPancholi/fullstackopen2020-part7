@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserStatsPopulateActionAsync } from '../reducers/userStatsReducer.js'
+import './css/UserStats.css'
 
 
 const StatContainer = ({ userStatsObj }) => {
