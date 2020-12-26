@@ -10,6 +10,7 @@ const getUsersStats = () => {
     (async() => {
       try{
         const usersStatsAxiosResult = await userAxios({
+          method: 'GET',
           url: '/stats'
         })
 
@@ -34,6 +35,36 @@ const getUsersStats = () => {
 }
 
 
+const getUser = (userId) => {
+  return new Promise((resolve,reject) => {
+    (async() => {
+      try{
+        const userFetchAxiosResult = await userAxios({
+          method: 'GET',
+          url: `/fetch/${userId}`
+        })
+
+        resolve(userFetchAxiosResult.data)
+
+      }catch(e){
+        if(e.response){
+          reject(e.response.data)
+        } else if(e.request){
+          reject({
+            message: 'NO RESPONSE FROM SERVER'
+          })
+        } else {
+          reject({
+            message: 'AN ERROR OCCURRED'
+          })
+        }
+      }
+    })()
+  })
+}
+
+
 export default {
-  getUsersStats
+  getUsersStats,
+  getUser
 }
