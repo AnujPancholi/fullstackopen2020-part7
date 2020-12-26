@@ -83,5 +83,7 @@ At any given time, we would need to store that data which is to be displayed in 
 
 Then I implemented the actual `UserStats` component that would show this data in the form of a table. The stats for each user would be dispalyed by a component that renders a table row for that particular user.
 
+**NOTE:** I did not know exactly how to style the table so I copied the css properties off a tutorial, **ONLY the css, NOT any of the code**.
+
 
 ----
