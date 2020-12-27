@@ -28,20 +28,14 @@ const BlogListing = () => {
     refreshBlogList()
   }, [])
 
-  const logout = () => {
-    dispatch(getLogoutAction())
-  }
-
-
   return (<div>
-    <p>Hello, {user.username} <button onClick={logout}>logout</button> </p>
     <BlogEntryForm user={user} />
     <h2>blogs</h2>
     {blogs.map(blog =>
       <div key={blog.id} className="blog-container">
-      <Link to={`blogs/${blog.id}`}>
-        {blog.title}
-      </Link>
+        <Link to={`blogs/${blog.id}`}>
+          {blog.title}
+        </Link>
       </div>
     )}
   </div>)
