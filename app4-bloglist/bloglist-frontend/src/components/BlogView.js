@@ -1,15 +1,22 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React,{ useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+
+import { getFeaturedBlogSetActionAsync } from '../reducers/featuredBlogReducer.js'
 
 
 const BlogView = () => {
 
   const urlParams = useParams()
-  const blogId = urlParams.blogId
+  const blogId = urlParams.blogId;
+  const dispatch = useDispatch()
   const blog = useSelector((state) => {
-    return state.blogs.find(blog => blog.id===blogId)
+    return state.featured_blog
   })
+
+  useEffect(() => {
+    dispatch(getFeaturedBlogSetActionAsync(blogId))
+  },[])
 
 
   return blog ? (<div>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { reject } from 'lodash'
 const baseUrl = '/api/blogs'
 
 const blogsAxios = axios.create({
@@ -13,6 +14,34 @@ const getAll = async() => {
   blogs.sort((b1,b2) => b2.likes-b1.likes)
 
   return blogs
+}
+
+const get = (id) => {
+  return new Promise((resolve,reject) => {
+    (async() => {
+      try{
+        const blogFetchAxiosResult = await blogsAxios({
+          method: 'GET',
+          url: `/${id}`
+        })
+
+        resolve(blogFetchAxiosResult.data)
+
+      }catch(e){
+        if(e.response){
+          reject(e.response.data)
+        } else if(e.request){
+          reject({
+            message: 'NO RESPONSE FROM SERVER'
+          })
+        } else {
+          reject({
+            message: 'AN ERROR OCCURRED'
+          })
+        }
+      }
+    })()
+  })
 }
 
 const addNewBlog = (blogDetails,token) => {
@@ -112,4 +141,4 @@ const deleteBlog = (blogId,token) => {
 }
 
 
-export default { getAll, addNewBlog, addLikeToBlog, deleteBlog }
+export default { get, getAll, addNewBlog, addLikeToBlog, deleteBlog }
