@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
 
 import Blog from './Blog.js'
 import BlogEntryForm from './BlogEntryForm.js'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
 import { getLogoutAction } from '../reducers/loginReducer.js'
+
+import './css/Blog.css'
 
 
 const BlogListing = () => {
@@ -36,7 +38,11 @@ const BlogListing = () => {
     <BlogEntryForm user={user} />
     <h2>blogs</h2>
     {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} user={user} />
+      <div className="blog-container">
+      <Link to={`blogs/${blog.id}`}>
+        {blog.title}
+      </Link>
+      </div>
     )}
   </div>)
 }

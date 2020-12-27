@@ -1,15 +1,20 @@
 import React,{ useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
-import { getFeaturedBlogSetActionAsync } from '../reducers/featuredBlogReducer.js'
+import LikesContainer from './LikesContainer.js'
+
+import { getFeaturedBlogSetActionAsync, getFeaturedBlogResetAction } from '../reducers/featuredBlogReducer.js'
+import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
 
 
 const BlogView = () => {
 
   const urlParams = useParams()
-  const blogId = urlParams.blogId;
+  const history = useHistory()
+  const blogId = urlParams.blogId
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.auth)
   const blog = useSelector((state) => {
     return state.featured_blog
   })
@@ -18,22 +23,31 @@ const BlogView = () => {
     dispatch(getFeaturedBlogSetActionAsync(blogId))
   },[])
 
+  const performBlogDelete = () => {
+    dispatch(getBlogDeleteActionAsync(blog.id,user.token))
+    dispatch(getFeaturedBlogResetAction())
+    history.push('/')
+  }
 
   return blog ? (<div>
     <h2>
       {blog.title}
     </h2>
 
-    <span>
+    <div>
             View it here:
       <a href={blog.url}>
         {blog.url}
       </a>
-    </span>
+    </div>
 
-    <span>
+    <div>
             By: {blog.author}
-    </span>
+    </div>
+    <LikesContainer blog={blog} />
+    <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
+          Delete
+    </button>
 
 
   </div>) : (<div>

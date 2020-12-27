@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import blogService from '../services/blogs.js'
 
 import { getNotificationHideAction,getNotificationShowAction } from './notificationReducer.js'
@@ -12,6 +13,10 @@ const featuredBlogReducer = (state = initialFeaturedBlog, action) => {
     return action.blog
   case 'FEATURED_BLOG_RESET':
     return null
+  case 'FEATURED_BLOG_LIKE':
+    return state ? _.merge({},state,{
+      likes: state.likes+1
+    }) : state
   default:
     return state
   }
@@ -42,6 +47,12 @@ export const getFeaturedBlogSetActionAsync = (blogId) => {
 export const getFeaturedBlogResetAction = () => {
   return {
     type: 'FEATURED_BLOG_RESET'
+  }
+}
+
+export const getFeaturedBlogLikeAction = () => {
+  return {
+    type: 'FEATURED_BLOG_LIKE'
   }
 }
 
