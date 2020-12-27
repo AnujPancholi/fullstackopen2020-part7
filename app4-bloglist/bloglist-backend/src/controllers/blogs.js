@@ -81,6 +81,93 @@ blogRouter.get('/', (request, response, next) => {
   })();
 })
 
+
+blogRouter.get('/:id', (request, response, next) => {
+  (async() => {
+    const resultObj = {
+      success: false,
+      error: null,
+      data: null,
+      resCode: 500
+    }
+
+    try{
+      // const allBlogsResult = await BlogModel.find({});
+
+      const [ blog ] = await BlogModel.aggregate([{
+        $match: {
+          _id: mongooseUtils.getObjectId(request.params.id)
+        }
+      },{
+        $lookup: {
+          "from": "users",
+          "let": {
+            "userId": "$userId"
+          },
+          "pipeline": [{
+            $match: {
+              $expr: {
+                $eq: ["$_id","$$userId"]
+              }
+            }
+          },{
+            $project: {
+              "id": "$_id",
+              "_id": 0,
+              "username": "$username",
+              "name": "$name"
+            }
+          }],
+          "as": "user"
+        }
+      },{
+        $unwind: {
+          path: "$user"
+        }
+      },{
+        $project: {
+          "id": "$_id",
+          "_id": 0,
+          "title": 1,
+          "author": 1,
+          "url": 1,
+          "likes": 1,
+          "user": 1
+        }
+      }]);
+
+      if(!blog){
+        resultObj.resCode = 404;
+        resultObj.success = false;
+        resultObj.data = null;
+        resultObj.error = {
+          message: "BLOG NOT FOUND"
+        }
+        throw new Error("BLOG NOT FOUND")
+      }
+
+      resultObj.success = true;
+      resultObj.data = blog;
+      resultObj.error = null;
+      resultObj.resCode = 200;
+
+    }catch(e){
+      if(!resultObj.error){
+        resultObj.success = false;
+        resultObj.error = {
+          message: e.message || "INTERNAL SERVER ERROR"
+        };
+        resultObj.data = null;
+        resultObj.resCode = 500;
+      }
+      
+    }
+
+    next(resultObj);
+    
+  })();
+})
+
 blogRouter.post('/', tokenValidator, (request, response, next) => {
   (async() => {
     const resultObj = {
