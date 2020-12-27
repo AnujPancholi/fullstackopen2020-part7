@@ -38,7 +38,7 @@ const BlogListing = () => {
     <BlogEntryForm user={user} />
     <h2>blogs</h2>
     {blogs.map(blog =>
-      <div className="blog-container">
+      <div key={blog.id} className="blog-container">
       <Link to={`blogs/${blog.id}`}>
         {blog.title}
       </Link>
