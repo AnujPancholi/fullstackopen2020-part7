@@ -85,5 +85,13 @@ Then I implemented the actual `UserStats` component that would show this data in
 
 **NOTE:** I did not know exactly how to style the table so I copied the css properties off a tutorial, **ONLY the css, NOT any of the code**.
 
+## Exercise 7.14
+
+WIP
+
+## Exercise 7.15
+
+First step was to add an API endpiont in the backend to return the information of just one blog by its ID. On the frontend, I used `useParams` to fetch the ID of the blog from the URL path, in a new component `BlogView`, then I implemented a reducer for a new property in the redux store, `featured_user` which will be displayed in the said `BlogView` component. The reason I decided to have this be a separate APi call instead of taking one blog out of the `blogs` property in the redux state is because someone can manually put the path of a certain blog in the address bar, so, this should be independent of the `blogs` in the state.
+
 
 ----
