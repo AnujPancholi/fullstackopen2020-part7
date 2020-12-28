@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
-import { getLogoutAction } from '../reducers/loginReducer.js'
 
 import './css/Blog.css'
 
