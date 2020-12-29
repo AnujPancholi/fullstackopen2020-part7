@@ -5,9 +5,9 @@ const initialFeaturedUser = null
 
 const featuredUserReducer = (state = initialFeaturedUser, action) => {
   switch (action.type) {
-  case 'USER_FEATURED_POPULATE':
+  case 'FEATURED_USER_POPULATE':
     return action.user
-  case 'USER_FEATURED_RESET':
+  case 'FEATURED_USER_RESET':
     return null
   default:
     return state
@@ -17,7 +17,7 @@ const featuredUserReducer = (state = initialFeaturedUser, action) => {
 const getFeaturedUserPopulateAction = (user) => {
 
   return {
-    type: 'USER_FEATURED_POPULATE',
+    type: 'FEATURED_USER_POPULATE',
     user: user
   }
 
@@ -43,7 +43,7 @@ export const getFeaturedUserPopulateActionAsync = (userId) => {
 
 export const getFeaturedUserResetAction = () => {
   return {
-    type: 'USER_FEATURED_RESET'
+    type: 'FEATURED_USER_RESET'
   }
 }
 
