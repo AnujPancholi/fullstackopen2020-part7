@@ -87,7 +87,7 @@ Then I implemented the actual `UserStats` component that would show this data in
 
 ## Exercise 7.14
 
-WIP
+Added a `UserView` component that fetches user data from `featured_user` property in redux store. Then I added the links in the `UserStats` component to route to the individual user view.
 
 ## Exercise 7.15
 
