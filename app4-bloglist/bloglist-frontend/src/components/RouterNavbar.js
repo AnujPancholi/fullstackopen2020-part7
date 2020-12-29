@@ -18,14 +18,16 @@ const RouterNavbar = () => {
     dispatch(getLogoutAction())
   }
 
-  return (<div>
-    <span>Hello, {user ? user.username : 'guest'} <button onClick={logout}>logout</button> </span>
+  return (<div className="nav-container">
+    <div className="nav-user-container">Hello, {user ? user.username : 'guest'} <button onClick={logout}>logout</button> </div>
+    <div>
     <Link className={'nav-link'} to="/">
             Blogs
     </Link>
     <Link className={'nav-link'} to="/users/stats">
             Users
     </Link>
+    </div>
   </div>)
 }
 

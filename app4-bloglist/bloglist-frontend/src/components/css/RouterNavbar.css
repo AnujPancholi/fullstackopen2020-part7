@@ -1,3 +1,17 @@
 .nav-link{
     padding: 5px;
 }
+
+.nav-container{
+    max-width: 50%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f58d71;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+}
+
+.nav-user-container{
+    padding-left: 5px;
+    padding-right: 5px;
+}
