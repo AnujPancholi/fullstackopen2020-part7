@@ -31,6 +31,7 @@ const UserStats = () => {
   },[])
 
   return (<div>
+    <h2>User Stats:</h2>
     {userStats ? (<>
       <table>
         <tr>
