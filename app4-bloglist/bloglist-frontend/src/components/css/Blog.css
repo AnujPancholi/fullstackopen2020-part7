@@ -1,6 +1,11 @@
 .blog-container {
     border: 1px solid black;
+    border-left: 5px groove maroon;
     margin: 2px 0px;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
     max-width: 50%;
 }
 
