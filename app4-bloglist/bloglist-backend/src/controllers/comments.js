@@ -7,6 +7,7 @@ const UserModel = require("../models/users.js");
 const logger = require('../utils/logger.js');
 const mongooseUtils = require("../utils/mongooseUtils.js");
 const tokenValidator = require("../middlewares/tokenValidator.js");
+const { response } = require("../app.js");
 
 
 commentsRouter.post("/",tokenValidator,async(request,response,next) => {
@@ -81,6 +82,73 @@ commentsRouter.post("/",tokenValidator,async(request,response,next) => {
   next(resultObj)
 
 })
+
+commentsRouter.get("/get-by-blog/:blogId",async(request,response,next) => {
+  const resultObj = {
+    success: false,
+    error: null,
+    data: null,
+    resCode: 500
+  }
+
+  try{
+    const blogsResult = await CommentModel.aggregate([{
+      $match: {
+        blogId: mongooseUtils.getObjectId(request.params.blogId)
+      }
+    },{
+      $lookup: {
+        from: "users",
+        let: {
+          "user_id": "$userId"
+        },
+        pipeline: [{
+          $match: {
+            $expr: {
+              $and: [{
+                $eq: ["$_id","$$user_id"]
+              }]
+            }
+          }
+        },{
+          $project: {
+            _id: 1,
+            user_type: 1,
+            username: 1,
+            name: 1
+          }
+        }],
+        as: "user"
+      }
+    },{
+      $unwind: {
+        path: "$user"
+      }
+    }]);
+
+    resultObj.success = true;
+    resultObj.error = null;
+    resultObj.data = blogsResult;
+    resultObj.resCode = 200;
+
+  }catch(e){
+
+    if(!resultObj.error){
+      resultObj.resCode = 500;
+      resultObj.error = {
+        message: "INTERNAL SERVER ERROR"
+      },
+      resultObj.data = null;
+      resultObj.success = false;
+    }
+        
+  }
+
+  next(resultObj);
+})
+
+
+
 
 const requestProcessingResultHandler = (resultObj,req,res,next) => {
   if(resultObj.success){
