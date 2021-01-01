@@ -93,5 +93,13 @@ Added a `UserView` component that fetches user data from `featured_user` propert
 
 First step was to add an API endpiont in the backend to return the information of just one blog by its ID. On the frontend, I used `useParams` to fetch the ID of the blog from the URL path, in a new component `BlogView`, then I implemented a reducer for a new property in the redux store, `featured_user` which will be displayed in the said `BlogView` component. The reason I decided to have this be a separate APi call instead of taking one blog out of the `blogs` property in the redux state is because someone can manually put the path of a certain blog in the address bar, so, this should be independent of the `blogs` in the state.
 
+## Exercise 7.16
+
+Have already implemented this.
+
+## Exercise 7.17
+
+First, made one POST and one GET endpoint to receive a new comment and get comments for a given blog respectively. Then implemented a `commentService` file on the frontend for interacting with the backend to fetch the comments. Since the comments will be visible for the `featured_blog`, I decided to make a property in the redux store, `featured_comments` to store the blog for `featured_comments`, and implemented a reducer for it. Then the flow would be that, in case a blog was viewed, first a blog would be populated via `featured_blog`, then its `id` would be retrieved in the `CommentsView` component via the `useSelector` hook and the comments would be fetched into `featured_comments` and populated.
+
 
 ----
