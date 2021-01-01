@@ -7,7 +7,6 @@ const UserModel = require("../models/users.js");
 const logger = require('../utils/logger.js');
 const mongooseUtils = require("../utils/mongooseUtils.js");
 const tokenValidator = require("../middlewares/tokenValidator.js");
-const { response } = require("../app.js");
 
 
 commentsRouter.post("/",tokenValidator,async(request,response,next) => {
@@ -20,9 +19,6 @@ commentsRouter.post("/",tokenValidator,async(request,response,next) => {
   try{
     const MANDATORY_PARAMS = [{
       keyname: "blogId",
-      type: "id"
-    }, {
-      keyname: "userId",
       type: "id"
     },{
       keyname: "text",
@@ -53,6 +49,8 @@ commentsRouter.post("/",tokenValidator,async(request,response,next) => {
         break;
       }
     })
+
+    request.body.userId = mongooseUtils.getObjectId(request.user.id)
 
     const comment = new CommentModel(request.body)
 
