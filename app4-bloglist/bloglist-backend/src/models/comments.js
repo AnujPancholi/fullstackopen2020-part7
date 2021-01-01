@@ -11,10 +11,22 @@ const commentSchema = new Mongoose.Schema({
     type: String,
     required: true
   },
-  userId: Mongoose.Types.ObjectId,
+  userId: {
+    type: Mongoose.Types.ObjectId
+  }
+})
+
+commentSchema.set('toJSON',{
+  transform: (doc,obj) => {
+    obj.id = obj._id.toString();
+    delete obj._id;
+    delete obj.__v;
+  }
 })
 
 const CommentModel = Mongoose.model('Comment',commentSchema);
+
+
 
 
 module.exports = CommentModel;
