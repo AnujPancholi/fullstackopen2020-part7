@@ -9,10 +9,12 @@ const commentSchema = new Mongoose.Schema({
   },
   text: {
     type: String,
+    minlength: 1,
     required: true
   },
   userId: {
-    type: Mongoose.Types.ObjectId
+    type: Mongoose.Types.ObjectId,
+    required: true
   }
 })
 
