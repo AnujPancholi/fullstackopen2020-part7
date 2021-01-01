@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 
 import LikesContainer from './LikesContainer.js'
+import CommentsView from './CommentsView.js'
 
 import { getFeaturedBlogSetActionAsync, getFeaturedBlogResetAction } from '../reducers/featuredBlogReducer.js'
 import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
@@ -49,6 +50,7 @@ const BlogView = () => {
           Delete
     </button>
 
+    <CommentsView blogId={blog.id}/>
 
   </div>) : (<div>
         No such blog found.
