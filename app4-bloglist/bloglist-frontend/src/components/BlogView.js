@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom'
 
 import LikesContainer from './LikesContainer.js'
 import CommentsView from './CommentsView.js'
+import CommentForm from "./CommentForm.js"
 
 import { getFeaturedBlogSetActionAsync, getFeaturedBlogResetAction } from '../reducers/featuredBlogReducer.js'
 import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
@@ -49,6 +50,8 @@ const BlogView = () => {
     <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
           Delete
     </button>
+
+    <CommentForm />
 
     <CommentsView blogId={blog.id}/>
 

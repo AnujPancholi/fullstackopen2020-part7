@@ -5,7 +5,7 @@ import loginReducer from './loginReducer.js'
 import userStatsReducer from './userStatsReducer'
 import featuredBlogReducer from './featuredBlogReducer.js'
 import featuredUserReducer from './featuredUserReducer.js'
-import featuredCommentsReducer from "./featuredCommentsReducer.js"
+import featuredCommentsReducer from './featuredCommentsReducer.js'
 
 
 const reducer = combineReducers({
