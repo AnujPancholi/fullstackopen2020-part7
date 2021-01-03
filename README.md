@@ -101,5 +101,13 @@ Have already implemented this.
 
 First, made one POST and one GET endpoint to receive a new comment and get comments for a given blog respectively. Then implemented a `commentService` file on the frontend for interacting with the backend to fetch the comments. Since the comments will be visible for the `featured_blog`, I decided to make a property in the redux store, `featured_comments` to store the blog for `featured_comments`, and implemented a reducer for it. Then the flow would be that, in case a blog was viewed, first a blog would be populated via `featured_blog`, then its `id` would be retrieved in the `CommentsView` component via the `useSelector` hook and the comments would be fetched into `featured_comments` and populated.
 
+## Exercise 7.18
+
+First made a function in `comments` service to make the POST request to add commment, then made the necessary function in the `featuredCommentsReducer` to change the state. Added a component in `BlogView` to render the form to add the comment.
+
+## Exercise 7.19
+
+Added `materiel-ui` in dependencies, then used the `Button` and `TextField` components in the `LoginForm`. There were some alignment issues, solved with css of my own using flexbox.  
+
 
 ----
