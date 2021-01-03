@@ -3,7 +3,6 @@
 }
 
 .nav-container{
-    max-width: 50%;
     display: flex;
     justify-content: space-between;
     background-color: #f58d71;
