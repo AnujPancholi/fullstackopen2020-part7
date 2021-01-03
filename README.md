@@ -109,5 +109,9 @@ First made a function in `comments` service to make the POST request to add comm
 
 Added `materiel-ui` in dependencies, then used the `Button` and `TextField` components in the `LoginForm`. There were some alignment issues, solved with css of my own using flexbox.  
 
+## Exercise 7.20
+
+I had already spent quite a bit of time on styling, now added components from material-ui in a few more places.
+
 
 ----
