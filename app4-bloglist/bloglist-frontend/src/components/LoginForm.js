@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux'
 
 import { getLoginActionAsync } from '../reducers/loginReducer.js'
 
+import {
+  TextField,
+  Button
+} from '@material-ui/core'
+import './css/LoginForm.css'
+
 const LoginForm = () => {
   const [username,setUsername] = useState('')
   const [password,setPassword] = useState('')
@@ -29,11 +35,11 @@ const LoginForm = () => {
   }
 
 
-  return (<div>
+  return (<div className="login-form-container">
     <form onSubmit={handleLogin}>
       <div>
-          username
-        <input
+        <TextField
+          label="Username"
           type="text"
           value={username}
           name="Username"
@@ -42,8 +48,8 @@ const LoginForm = () => {
         />
       </div>
       <div>
-          password
-        <input
+        <TextField
+          label="Password"
           type="password"
           value={password}
           name="Password"
@@ -51,7 +57,9 @@ const LoginForm = () => {
           onChange={handlePasswordChange}
         />
       </div>
-      <button type="submit" id="login-button">login</button>
+      <div className="login-button-container">
+        <Button variant="primary" type="submit" id="login-button">login</Button>
+      </div>
     </form>
   </div>)
 

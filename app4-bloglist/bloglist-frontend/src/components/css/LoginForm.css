@@ -1,0 +1,10 @@
+.login-button-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login-form-container{
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+}
