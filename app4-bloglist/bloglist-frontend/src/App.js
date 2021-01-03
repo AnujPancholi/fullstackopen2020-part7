@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 //components
+import Container from '@material-ui/core/Container'
 import MainView from './components/MainView'
 import LoginForm from './components/LoginForm.js'
 import Notification from './components/Notification.js'
@@ -44,14 +45,16 @@ const App = () => {
   console.log('STATE: USER: ',user)
 
   return (
-    <div>
-      <Router>
-        <ToastProvider>
-          <Notification />
-          {user===null ? <LoginForm /> : (<><RouterNavbar /><MainView /></>)}
-        </ToastProvider>
-      </Router>
-    </div>
+    <Container>
+      <div>
+        <Router>
+          <ToastProvider>
+            <Notification />
+            {user===null ? <LoginForm /> : (<><RouterNavbar /><MainView /></>)}
+          </ToastProvider>
+        </Router>
+      </div>
+    </Container>
   )
 }
 
