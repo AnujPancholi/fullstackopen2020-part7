@@ -11,7 +11,7 @@ const Notification = () => {
       width: '25%',
       padding: 10,
       left: '50%',
-      transform: 'translate(-50%, 0px)',
+      transform: 'translate(+25%, 0px)',
       zIndex: 3,
       border: 'solid',
       borderWidth: 1,
