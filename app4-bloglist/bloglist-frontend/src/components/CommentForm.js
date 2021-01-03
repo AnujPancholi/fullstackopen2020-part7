@@ -3,6 +3,8 @@ import { useSelector,useDispatch } from 'react-redux'
 
 import { getAddCommentActionAsync } from '../reducers/featuredCommentsReducer.js'
 
+import './css/CommentForm.css'
+
 
 
 const CommentForm = () => {
@@ -29,7 +31,7 @@ const CommentForm = () => {
   }
 
   return(<div>
-    <form id="comment-form" onSubmit={handleSubmit}>
+    <form id="comment-form" onSubmit={handleSubmit} className="comment-form">
     Add Comment<input name="comment-text" type="text" value={commentInputText} onChange={handleCommentInputChange} />
       <input name="comment-submit" type="submit" defaultValue="Add Comment"/>
     </form>

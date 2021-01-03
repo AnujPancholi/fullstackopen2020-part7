@@ -4,10 +4,15 @@ import { useParams, useHistory } from 'react-router-dom'
 
 import LikesContainer from './LikesContainer.js'
 import CommentsView from './CommentsView.js'
-import CommentForm from "./CommentForm.js"
+import CommentForm from './CommentForm.js'
 
 import { getFeaturedBlogSetActionAsync, getFeaturedBlogResetAction } from '../reducers/featuredBlogReducer.js'
 import { getBlogDeleteActionAsync } from '../reducers/blogsReducer.js'
+
+import './css/BlogView.css'
+import {
+  Paper
+} from '@material-ui/core'
 
 
 const BlogView = () => {
@@ -32,24 +37,28 @@ const BlogView = () => {
   }
 
   return blog ? (<div>
-    <h2>
-      {blog.title}
-    </h2>
+    <Paper elevation={3}>
+      <div className="blog-display">
+        <h2>
+          {blog.title}
+        </h2>
 
-    <div>
+        <div>
             View it here:
-      <a href={blog.url}>
-        {blog.url}
-      </a>
-    </div>
+          <a href={blog.url}>
+            {blog.url}
+          </a>
+        </div>
 
-    <div>
+        <div>
             By: {blog.author}
-    </div>
-    <LikesContainer blog={blog} />
-    <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
+        </div>
+        <LikesContainer blog={blog} />
+        <button onClick={performBlogDelete} id={`blog-delete-button-${blog.id}`} className={user && blog.user && blog.user.id===user.id ? '' : 'hidden'}>
           Delete
-    </button>
+        </button>
+      </div>
+    </Paper>
 
     <CommentForm />
 

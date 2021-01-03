@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom'
 import { getBlogsPopulateActionAsync } from '../reducers/blogsReducer.js'
 
 import './css/Blog.css'
+import {
+  Paper
+} from '@material-ui/core'
 
 
 const BlogListing = () => {
@@ -31,11 +34,11 @@ const BlogListing = () => {
     <BlogEntryForm user={user} />
     <h2>blogs</h2>
     {blogs.map(blog =>
-      <div key={blog.id} className="blog-container">
+      <Paper elevaion={5} key={blog.id} className="blog-container">
         <Link to={`blogs/${blog.id}`}>
           {blog.title}
         </Link>
-      </div>
+      </Paper>
     )}
   </div>)
 }
